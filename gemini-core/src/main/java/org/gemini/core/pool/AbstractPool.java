@@ -127,4 +127,16 @@ public abstract class AbstractPool<T> implements Closeable {
 
         return this.pool.getNumIdle();
     }
+
+    /**
+     * 标记对象为无效。在对象被销毁时，可以调用此方法来通知对象池。
+     * @param resource
+     */
+    protected void invalidateResource(final T resource) {
+        try {
+            this.pool.invalidateObject(resource);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
