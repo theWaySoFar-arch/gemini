@@ -7,7 +7,6 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
 import java.io.Closeable;
 
-import static com.sun.jmx.snmp.EnumRowStatus.destroy;
 
 /**
  * @author TheWaySoFar
