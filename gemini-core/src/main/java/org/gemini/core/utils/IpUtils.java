@@ -38,7 +38,7 @@ public class IpUtils {
      * 找到第一个非回环地址（非 loopback 地址）的 IPv4 地址,若找不到则返回loopback 地址
      * @return
      */
-    private static String getLocalIP() {
+    public static String getLocalIP() {
         InetAddress result=null;
         try{
             int index=Integer.MAX_VALUE;

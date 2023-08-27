@@ -18,6 +18,7 @@
     </properties>
     <modules>
         <module>gemini-core</module>
+        <module>gemini-logback</module>
     </modules>
     
 </project>

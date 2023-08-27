@@ -1,5 +1,6 @@
 package org.gemini.core.dto;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Builder
 public class CompressMessage {
     /**
      * 压缩日志长度

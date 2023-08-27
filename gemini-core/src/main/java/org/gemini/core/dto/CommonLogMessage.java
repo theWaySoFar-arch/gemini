@@ -1,5 +1,6 @@
 package org.gemini.core.dto;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +12,8 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class CommonMessage extends BaseMessage{
+@Builder
+public class CommonLogMessage extends BaseLogMessage {
     /**
      * 日志时间
      */
