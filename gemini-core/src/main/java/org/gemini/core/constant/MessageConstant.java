@@ -23,5 +23,7 @@ public class MessageConstant {
 
      public final static String DELIM_STR = "{}";
 
+     public  static int RUN_MODEL= 2;
+
 
 }

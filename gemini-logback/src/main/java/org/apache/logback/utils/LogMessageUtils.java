@@ -3,18 +3,17 @@ package org.apache.logback.utils;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.ThrowableProxy;
+import org.gemini.core.constant.DataFormatConstant;
 import org.gemini.core.constant.MessageConstant;
 import org.gemini.core.dto.BaseLogMessage;
 import org.gemini.core.dto.CommonLogMessage;
 import org.gemini.core.dto.TraceLogMessage;
 import org.gemini.core.factory.TraceLogMessageFactory;
 import org.gemini.core.trace.TraceMessage;
-import org.gemini.core.utils.ExceptionStackTraceUtils;
-import org.gemini.core.utils.IpUtils;
-import org.gemini.core.utils.StringUtils;
-import org.gemini.core.utils.TTLUtils;
+import org.gemini.core.utils.*;
 import org.slf4j.helpers.MessageFormatter;
 
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -38,6 +37,7 @@ public class LogMessageUtils {
     public static BaseLogMessage getLogMessage(final ILoggingEvent iLoggingEvent, final String appName, final String env, final String runModel) {
         String formattedMessage=getMessage(iLoggingEvent);
         TraceMessage traceMessage = TTLUtils.threadLocal.get();
+        //如果是trace日志
         if (formattedMessage.startsWith(MessageConstant.TRACE_PREFIX)) {
             return TraceLogMessageFactory.getTraceLogMessage(
                     traceMessage, appName, env, iLoggingEvent.getTimeStamp());
@@ -46,7 +46,23 @@ public class LogMessageUtils {
         commonLogMessage.setClassName(iLoggingEvent.getLoggerName());
         commonLogMessage.setThreadName(iLoggingEvent.getThreadName());
         commonLogMessage.setSeq(SEQ.getAndIncrement());
-        return null;
+        StackTraceElement[] stackTraceElements=null;
+        if("2".equals(runModel)) {
+            //调用 getCallerData() 方法会返回一个包含调用者信息的数组。通常，这些信息包括调用者的类名、方法名、文件名和行号等。
+            stackTraceElements = iLoggingEvent.getCallerData();
+        }
+        if(stackTraceElements!=null&&stackTraceElements.length>0) {
+            StackTraceElement stackTraceElement=stackTraceElements[0];
+            String method = stackTraceElement.getMethodName();
+            String line = String.valueOf(stackTraceElement.getLineNumber());
+            commonLogMessage.setMethod(method + "(" + stackTraceElement.getFileName() + ":" + line + ")");
+        } else {
+            commonLogMessage.setMethod(iLoggingEvent.getThreadName());
+        }
+        // dateTime字段用来保存当前服务器的时间戳字符串
+        commonLogMessage.setDateTime(DateUtils.formatTimestamp(iLoggingEvent.getTimeStamp(), DataFormatConstant.FORMAT_FULL_MS));
+        commonLogMessage.setLogLevel(iLoggingEvent.getLevel().toString());
+        return commonLogMessage;
     }
 
     private static CommonLogMessage getCommonLogMessage(String formattedMessage, String appName, String env, long timeStamp) {
@@ -88,5 +104,14 @@ public class LogMessageUtils {
            return MessageFormatter.arrayFormat(msg,logs).getMessage();
        }
         return TraceLogMessageFactory.packageMessage(msg, logs);
+    }
+
+    public static String getLogMessage(BaseLogMessage logMessage, ILoggingEvent iLoggingEvent) {
+        Map<String, String> mdc = iLoggingEvent.getMDCPropertyMap();
+        Map<String, Object> map = EntityConvertUtils.entityToMap( logMessage);
+        if (mdc != null) {
+            map.putAll(mdc);
+        }
+        return JsonUtils.serialize(map);
     }
 }

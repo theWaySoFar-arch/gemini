@@ -11,20 +11,6 @@ import java.util.Date;
  * @date 2023/8/25 19:50
  */
 public class DateUtils {
-    /**
-     * 日期格式：年-月-日 时-分-秒
-     */
-    public static final String FORMAT_FULL = "yyyy-MM-dd HH:mm:ss";
-    /**
-     * 日期格式：年-月-日
-     */
-    public static final String FORMAT_DATE = "yyyy-MM-dd";
-    /**
-     * 日期格式：时-分-秒
-     */
-    public static final String FORMAT_TIME = "HH:mm:ss";
-
-    public static final String FORMAT_FULL_MS= "yyyy-MM-dd HH:mm:ss.SSS";
 
     /**
      * 将时间戳格式化为特定的日期格式
