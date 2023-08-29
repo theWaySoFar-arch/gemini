@@ -1,5 +1,7 @@
 package org.gemini.core.factory;
 
+import org.gemini.core.client.KafkaProducerClient;
+
 /**
  * @author TheWaySoFar
  * @version 1.0
@@ -8,7 +10,12 @@ package org.gemini.core.factory;
  */
 public class MessageAppenderFactory {
 
+
+
     public static void pushMessage(String message){
 
+    }
+
+    public static void sendTraceMessage(String serialize) {
     }
 }
