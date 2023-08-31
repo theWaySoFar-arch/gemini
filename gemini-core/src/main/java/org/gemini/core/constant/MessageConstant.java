@@ -27,14 +27,23 @@ public class MessageConstant {
      public final static String DELIM_STR = "{}";
 
      public  static int RUN_MODEL= 2;
-  /**
-   * 普通日志存入到队列中的key
-   */
-  public final static String Common_KEY="common_key";
+     /**
+     * 普通日志存入到队列中的key
+     */
+     public final static String COMMON_TYPE="common_type";
 
-  /**
-   * 链路日志存入到队列中的key
-   */
-     public final static String Trace_KEY="trace_key";
+     /**
+     * 链路日志存入到队列中的key
+     */
+     public final static String TRACE_TYPE="trace_type";
+     /*
+      * 普通日志存入到队列中的key
+     */
+     public final static String COMMON_KEY="common_type";
+
+     /**
+      * 链路日志存入到队列中的key
+      */
+     public final static String TRACE_KEY="trace_type";
 
 }

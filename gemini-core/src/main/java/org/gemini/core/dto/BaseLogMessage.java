@@ -1,11 +1,10 @@
 package org.gemini.core.dto;
 
-import lombok.Builder;
+
 import lombok.NoArgsConstructor;
 
 
 @NoArgsConstructor
-@Builder
 public class BaseLogMessage {
     //服务名
     public String appName;

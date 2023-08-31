@@ -19,6 +19,7 @@
     <modules>
         <module>gemini-core</module>
         <module>gemini-logback</module>
+        <module>gemini-demo</module>
     </modules>
     
 </project>

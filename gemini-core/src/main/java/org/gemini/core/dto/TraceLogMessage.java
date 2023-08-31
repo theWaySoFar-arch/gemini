@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
  * @date 2023/8/23 19:11
  */
 @NoArgsConstructor
-@Builder
 public class TraceLogMessage extends BaseLogMessage {
     /**
      * 执行的毫秒时间

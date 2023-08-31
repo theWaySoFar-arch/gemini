@@ -3,26 +3,19 @@ package org.apache.logback.appender;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.AppenderBase;
-import com.lmax.disruptor.BlockingWaitStrategy;
-import com.lmax.disruptor.EventFactory;
 import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.dsl.Disruptor;
-import com.lmax.disruptor.dsl.ProducerType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.logback.utils.LogMessageUtils;
 import org.gemini.core.client.KafkaProducerClient;
 import org.gemini.core.constant.MessageConstant;
-import org.gemini.core.disruptor.LogMessageProcessor;
-import org.gemini.core.disruptor.MessageSender;
+import org.gemini.core.disruptor.RingBufferPublisher;
 import org.gemini.core.dto.BaseLogMessage;
 import org.gemini.core.dto.CommonLogMessage;
 import org.gemini.core.dto.MessageData;
-import org.gemini.core.factory.MessageAppenderFactory;
+import org.gemini.core.factory.DisruptorFactory;
 import org.gemini.core.utils.JsonUtils;
-
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 
 /**
  * @author TheWaySoFar
@@ -34,17 +27,19 @@ import java.util.concurrent.ThreadFactory;
 @Data
 public class KafkaAppender extends AppenderBase<ILoggingEvent> {
 
-    private String appName;
+    private String appName="app";
     private String env = "default";
     private String kafkaHosts;
-    private String runModel;
+    private String runModel="2";
     private String expand;
     private KafkaProducerClient kafkaClient;
     private boolean compressor = false;
     private Disruptor<MessageData> disruptor;
     private Integer threadNum;
     private RingBuffer<MessageData>ringBuffer;
-    private MessageSender messageSender;
+    private RingBufferPublisher ringBufferPublisher;
+
+    private static boolean disruptorConfigured = false;
 
     @Override
     protected void append(ILoggingEvent iLoggingEvent) {
@@ -56,32 +51,24 @@ public class KafkaAppender extends AppenderBase<ILoggingEvent> {
         BaseLogMessage logMessage= LogMessageUtils.getLogMessage(iLoggingEvent,appName,env,runModel);
         if (logMessage instanceof CommonLogMessage) {
             final String message = LogMessageUtils.getLogMessage(logMessage, iLoggingEvent);
-            this.messageSender.sendCommonMessage(message);
+            this.ringBufferPublisher.sendMessage(message,MessageConstant.COMMON_TYPE);
         } else {
-            this.messageSender.sendTraceMessage(JsonUtils.serialize(logMessage));
+            this.ringBufferPublisher.sendMessage(JsonUtils.serialize(logMessage),MessageConstant.TRACE_TYPE);
         }
     }
 
-    @Override
-    public void start() {
-        super.start();
-        if (this.runModel != null) {
-            MessageConstant.RUN_MODEL = Integer.parseInt(this.runModel);
+        @Override
+        public void start() {
+            super.start();
+            if(!disruptorConfigured){
+            configureDisruptorAndSender();
+             disruptorConfigured=!disruptorConfigured;
+            }
         }
-        if (this.kafkaClient == null) {
-            this.kafkaClient = KafkaProducerClient.getInstance(this.kafkaHosts, this.compressor ? "lz4" : "none");
-        }
-        ThreadFactory threadFactory = Executors.defaultThreadFactory();
 
-        EventFactory<MessageData> eventFactory = MessageData::new;
-        this.disruptor= new Disruptor<MessageData>(eventFactory, 1024*1024, threadFactory,
-                ProducerType.SINGLE, new BlockingWaitStrategy());
-        LogMessageProcessor[] consumers = new LogMessageProcessor[this.threadNum==null?10:this.threadNum];
-        for (int i = 0; i < consumers.length; i++) {
-            consumers[i] = new LogMessageProcessor(this.kafkaClient);
-        }
-        disruptor.handleEventsWithWorkerPool(consumers);
-        RingBuffer<MessageData>ringBuffer = disruptor.start();
-        this.messageSender=new MessageSender(ringBuffer);
+        private void configureDisruptorAndSender() {
+            DisruptorFactory disruptorFactory = new DisruptorFactory(this.appName, env, kafkaHosts, compressor, threadNum);
+            this.disruptor = disruptorFactory.createDisruptor();
+            this.ringBufferPublisher = disruptorFactory.createMessageSender(disruptor.getRingBuffer());
     }
 }

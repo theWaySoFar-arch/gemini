@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@Builder
 public class CompressMessage {
     /**
      * 压缩日志长度

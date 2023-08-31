@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/gemini.iml" filepath="$PROJECT_DIR$/.idea/gemini.iml" />
       <module fileurl="file://$PROJECT_DIR$/gemini-core/gemini-core.iml" filepath="$PROJECT_DIR$/gemini-core/gemini-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gemini-demo/gemini-demo.iml" filepath="$PROJECT_DIR$/gemini-demo/gemini-demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/gemini-logback/gemini-logback.iml" filepath="$PROJECT_DIR$/gemini-logback/gemini-logback.iml" />
     </modules>
   </component>

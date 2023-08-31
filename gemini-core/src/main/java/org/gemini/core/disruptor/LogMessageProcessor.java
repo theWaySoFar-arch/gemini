@@ -22,11 +22,13 @@ public class LogMessageProcessor implements WorkHandler<MessageData> {
     @SneakyThrows
     @Override
     public void onEvent( MessageData messageData) throws Exception {
-        if(messageData.message.startsWith(MessageConstant.Common_PREFIX)){
-            String result = messageData.getMessage().replaceFirst(MessageConstant.Common_PREFIX, "");
-            kafkaProducerClient.pushMessage(MessageConstant.Common_KEY,result);
+        if(messageData==null){
+            System.out.println("messageData is null !!!!!!!!!!!!!!!!!!");
+        }
+        if(messageData.getMessageType().equals(MessageConstant.COMMON_TYPE)){
+             kafkaProducerClient.pushMessage(MessageConstant.COMMON_KEY,messageData.getMessage());
         }else{
-            kafkaProducerClient.pushMessage(MessageConstant.Trace_KEY,messageData.message);
+            kafkaProducerClient.pushMessage(MessageConstant.TRACE_KEY, messageData.getMessage());
         }
     }
 }

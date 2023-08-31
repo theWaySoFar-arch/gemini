@@ -44,7 +44,7 @@ public class KafkaProducerPool extends AbstractPool<KafkaProducer>{
     public void returnResource(final KafkaProducer resource) {
         if (resource != null) {
             try {
-                returnResource(resource);
+                super.returnResource(resource);
             } catch (Exception e) {
                 invalidateResource(resource);
             }

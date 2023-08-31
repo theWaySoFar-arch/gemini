@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@Builder
 public class CommonLogMessage extends BaseLogMessage {
     /**
      * 日志时间

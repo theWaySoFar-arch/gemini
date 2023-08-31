@@ -66,8 +66,9 @@ public class LogMessageUtils {
     }
 
     private static CommonLogMessage getCommonLogMessage(String formattedMessage, String appName, String env, long timeStamp) {
-        CommonLogMessage commonLogMessage = CommonLogMessage.builder().logTime(timeStamp)
-                .content(formattedMessage).build();
+        CommonLogMessage commonLogMessage = new CommonLogMessage();
+              commonLogMessage.setLogTime(timeStamp);
+              commonLogMessage.setContent(formattedMessage);
         commonLogMessage.setAppName(appName);
         commonLogMessage.setEnv(env);
         commonLogMessage.setIPaddr(IpUtils.CURRENT_IP);

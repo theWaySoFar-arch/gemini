@@ -9,11 +9,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="gemini-core" />
         <module name="gemini-logback" />
+        <module name="gemini-demo" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="gemini" target="1.8" />
       <module name="gemini-core" target="1.8" />
+      <module name="gemini-demo" target="1.8" />
       <module name="gemini-logback" target="1.8" />
     </bytecodeTargetLevel>
   </component>

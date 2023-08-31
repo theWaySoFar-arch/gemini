@@ -35,11 +35,11 @@ public class TraceLogMessageFactory {
      * @return
      */
     public static BaseLogMessage getTraceLogMessage(final TraceMessage traceMessage, final String appName, final String env, final long timeStamp) {
-        TraceLogMessage traceLogMessage = TraceLogMessage.builder().traceTime(timeStamp)
-                .position(traceMessage.getPosition())
-                .messageType(traceMessage.getMessageType())
-                .serialNumber(traceMessage.getSerialNumber().get())
-                .build();
+        TraceLogMessage traceLogMessage = new TraceLogMessage();
+        traceLogMessage.setTraceTime(timeStamp);
+        traceLogMessage .setPosition(traceMessage.getPosition());
+        traceLogMessage .setMessageType(traceMessage.getMessageType());
+        traceLogMessage .setSerialNumber(traceMessage.getSerialNumber().get());
         traceLogMessage.setAppName(appName);
         traceLogMessage.setEnv(env);
         return traceLogMessage;
