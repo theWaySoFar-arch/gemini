@@ -3,10 +3,13 @@ package org.gemini.core.client;
 import lombok.NoArgsConstructor;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.gemini.core.dto.MessageData;
 import org.gemini.core.exception.QueueOutofConnectException;
 import org.gemini.core.pool.KafkaProducerPool;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * @author TheWaySoFar
@@ -26,15 +29,15 @@ public class KafkaProducerClient extends AbstractClient{
         this.kafkaProducerPool = new KafkaProducerPool(hosts, compressionType);
     }
     public static KafkaProducerClient getInstance(String hosts, String compressionType) {
-          if (instance == null) {
-               synchronized (KafkaProducerClient.class) {
-                 if (instance == null) {
-                   instance = new KafkaProducerClient(hosts, compressionType);
-                 }
-              }
-         }
-            return instance;
-     }
+        if (instance == null) {
+            synchronized (KafkaProducerClient.class) {
+                if (instance == null) {
+                    instance = new KafkaProducerClient(hosts, compressionType);
+                }
+            }
+        }
+        return instance;
+    }
 
     @Override
     public void pushMessage(String topic, String message) throws QueueOutofConnectException {
@@ -73,5 +76,23 @@ public class KafkaProducerClient extends AbstractClient{
     @Override
     public void pushBatchMessage(String topic, List<String> message) throws QueueOutofConnectException {
 
+    }
+    public void pushBatchMessage(ConcurrentLinkedQueue<MessageData> cacheQueue)throws QueueOutofConnectException{
+        KafkaProducer kafkaProducer = null;
+        try {
+            kafkaProducer = kafkaProducerPool.getResource();
+            Iterator<MessageData> iterator = cacheQueue.iterator();
+            while(iterator.hasNext()){
+                MessageData data = iterator.next();
+                kafkaProducer.send(new ProducerRecord<String, String>(data.getMessageType(), data.getMessage()));
+            }
+
+        } catch (Exception e) {
+            throw new QueueOutofConnectException("kafka 写入失败！", e);
+        } finally {
+            if (kafkaProducer != null) {
+                kafkaProducerPool.returnResource(kafkaProducer);
+            }
+        }
     }
 }
