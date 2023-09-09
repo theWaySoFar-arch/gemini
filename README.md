@@ -4,8 +4,8 @@
 基于GVP项目：[Plumelog](https://gitee.com/plumeorg/plumelog)
 
 #### 软件架构
-软件架构说明
 
+目前主流的日志收集平台采用的方案之一为elk，但elasticsearch作为搜索引擎有着几大缺陷，例如占用存储空间大，峰值QPS不高以及分析能力弱等等。针对elk的确定，本项目采用消息队列+doris实时数仓构建新一代日志收集与展示平台。
 
 #### 安装教程
 
