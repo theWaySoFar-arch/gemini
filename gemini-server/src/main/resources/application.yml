@@ -1,0 +1,13 @@
+server:
+  port: 9090
+spring:
+  #数据库连接配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.190.90:9030/demo?characterEncoding=utf-8&useSSL=false
+    username: root
+    password:
+
+#mybatis的相关配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml

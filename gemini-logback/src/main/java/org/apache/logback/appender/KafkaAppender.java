@@ -44,7 +44,6 @@ public class KafkaAppender extends AppenderBase<ILoggingEvent> {
     private RingBuffer<MessageData>ringBuffer;
     private RingBufferPublisher ringBufferPublisher;
     private ConcurrentLinkedQueue<MessageData>cacheQueue;
-    private static boolean disruptorConfigured = false;
     private int max=50;
     private long time=500;
     private AtomicLong lastSendTime = new AtomicLong(0);
@@ -83,19 +82,9 @@ public class KafkaAppender extends AppenderBase<ILoggingEvent> {
 
     @Override
     public void start() {
-        super.start();
-        if(!disruptorConfigured){
-            configureDisruptorAndSender();
-            disruptorConfigured=!disruptorConfigured;
-        }
         this.kafkaClient=KafkaProducerClient.getInstance("192.168.190.88:9092","none");
         this.lastSendTime=new AtomicLong(0);
         this.cacheQueue=new ConcurrentLinkedQueue<>();
     }
 
-    private void configureDisruptorAndSender() {
-        DisruptorFactory disruptorFactory = new DisruptorFactory(this.appName, env, kafkaHosts, compressor, threadNum);
-        this.disruptor = disruptorFactory.createDisruptor();
-        this.ringBufferPublisher = disruptorFactory.createMessageSender(disruptor.getRingBuffer());
-    }
 }

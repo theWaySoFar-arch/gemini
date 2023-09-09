@@ -6,6 +6,8 @@
       <module fileurl="file://$PROJECT_DIR$/gemini-core/gemini-core.iml" filepath="$PROJECT_DIR$/gemini-core/gemini-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/gemini-demo/gemini-demo.iml" filepath="$PROJECT_DIR$/gemini-demo/gemini-demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/gemini-logback/gemini-logback.iml" filepath="$PROJECT_DIR$/gemini-logback/gemini-logback.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gemini-server/gemini-server.iml" filepath="$PROJECT_DIR$/gemini-server/gemini-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gemini-trace/gemini-trace.iml" filepath="$PROJECT_DIR$/gemini-trace/gemini-trace.iml" />
     </modules>
   </component>
 </project>
