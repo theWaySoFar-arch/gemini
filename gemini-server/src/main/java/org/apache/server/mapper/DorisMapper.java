@@ -1,5 +1,6 @@
 package org.apache.server.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.server.po.Person;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  * @describe TODO
  * @date 2023/9/10 7:46
  */
+@Mapper
 public interface DorisMapper {
 
     /**

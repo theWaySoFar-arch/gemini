@@ -3,6 +3,6 @@
 <mapper namespace="org.apache.server.mapper.DorisMapper">
 
     <select id="listDoris" resultType="org.apache.server.po.Person">
-        select id,name,age,cost from doris_test
+        select id,name,age,cost from person
     </select>
 </mapper>
