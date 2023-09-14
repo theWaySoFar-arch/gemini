@@ -15,13 +15,11 @@ public abstract class AbstractClient{
     }
     public void pushMessage(final String topic,final String message)throws QueueOutofConnectException {
     }
-    public String getMessage(final String topic)throws QueueOutofConnectException{
+    public List<String> getMessage(final String topic)throws QueueOutofConnectException{
         return null;
     }
     public void pushBatchMessage(final String topic, final List<String> message)throws QueueOutofConnectException{
 
     }
-    public List<String> getMessage(final String topic,final int size)throws QueueOutofConnectException{
-        return null;
-    }
+
 }
