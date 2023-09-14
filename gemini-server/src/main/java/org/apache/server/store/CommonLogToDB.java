@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CommonLogToDB {
+
     private Logger logger = LoggerFactory.getLogger(CommonLogToDB.class);
 
     public void beginIntoDb() {
