@@ -3,10 +3,12 @@ package org.gemini.core.client;
 
 import org.gemini.core.exception.QueueOutofConnectException;
 
+import java.util.List;
+
 public class KafkaConsumerClient extends AbstractClient{
 
     @Override
-    public void pushMessage(final String topic, final String message) throws QueueOutofConnectException {
-        super.pushMessage(topic, message);
+    public List<String> getMessage(String topic, int size) throws QueueOutofConnectException {
+        return super.getMessage(topic, size);
     }
 }
