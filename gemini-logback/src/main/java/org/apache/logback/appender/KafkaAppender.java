@@ -16,7 +16,6 @@ import org.gemini.core.dto.BaseLogMessage;
 import org.gemini.core.dto.CommonLogMessage;
 import org.gemini.core.dto.MessageData;
 import org.gemini.core.exception.QueueOutofConnectException;
-import org.gemini.core.factory.DisruptorFactory;
 import org.gemini.core.utils.JsonUtils;
 
 import java.util.concurrent.ConcurrentLinkedQueue;

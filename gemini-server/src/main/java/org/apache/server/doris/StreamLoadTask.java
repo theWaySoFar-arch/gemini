@@ -2,6 +2,7 @@ package org.apache.server.doris;
 
 import okhttp3.*;
 import org.apache.commons.codec.binary.Base64;
+import org.gemini.core.constant.MessageConstant;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -28,26 +29,27 @@ public class StreamLoadTask {
     private  static int DORIS_HTTP_PORT ;
     @Resource
     private OkHttpClient okHttpClient;
-    public void send(List<String>list){
+    public void send(List<String> list, final String type){
         StringBuilder stringBuilder=new StringBuilder();
         for(String str:list){
             stringBuilder.append(str).append("\n");
         }
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         try {
-            sendData(stringBuilder.toString());
+            sendData(stringBuilder.toString(),type);
         } catch (Exception e) {
             logger.error(e.toString());
             throw new RuntimeException(e);
         }
     }
-    private void sendData(final String content) throws Exception {
+    private void sendData(final String content,final String type) throws Exception {
         //构建URL
+        String tableName = MessageConstant.COMMON_KEY.equals(type) ? MessageConstant.COMMONLOG_TABLE_NAME : MessageConstant.TRACE_TABLE_NAME;
         final String loadUrl = String.format("http://%s:%s/api/%s/%s/_stream_load",
                 DORIS_HOST,
                 DORIS_HTTP_PORT,
                 DORIS_DB,
-                DORIS_TABLE);
+                tableName);
         Request request = buildRequest(loadUrl);
         MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(content, mediaType);

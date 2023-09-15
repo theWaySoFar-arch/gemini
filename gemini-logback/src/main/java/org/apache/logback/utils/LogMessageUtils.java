@@ -7,7 +7,6 @@ import org.gemini.core.constant.DataFormatConstant;
 import org.gemini.core.constant.MessageConstant;
 import org.gemini.core.dto.BaseLogMessage;
 import org.gemini.core.dto.CommonLogMessage;
-import org.gemini.core.dto.TraceLogMessage;
 import org.gemini.core.factory.TraceLogMessageFactory;
 import org.gemini.core.trace.TraceMessage;
 import org.gemini.core.utils.*;

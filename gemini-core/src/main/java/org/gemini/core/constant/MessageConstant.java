@@ -46,4 +46,7 @@ public class MessageConstant {
       */
      public final static String TRACE_KEY="trace_type";
 
+     public final static String COMMONLOG_TABLE_NAME="commonLog";
+
+     public final static String TRACE_TABLE_NAME="traceLog";
 }

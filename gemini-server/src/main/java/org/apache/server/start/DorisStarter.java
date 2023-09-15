@@ -22,6 +22,7 @@ public class DorisStarter {
 
     @PostConstruct
     public void start(){
-
+      commonLogToDB.beginIntoDb();
+      traceLogToDB.beginIntoDb();
     }
 }

@@ -27,7 +27,7 @@ public class CommonLogToDB extends AbstractLogToDB{
         ThreadPoolUtils.getThreadPool().execute(()->{
             try {
                 List<String> list = kafkaConsumerClient.getMessage(MessageConstant.COMMON_KEY);
-                streamLoadTask.send(list);
+                streamLoadTask.send(list,MessageConstant.COMMON_KEY);
             } catch (QueueOutofConnectException e) {
                 logger.error(e.toString());
                 throw new RuntimeException(e);
