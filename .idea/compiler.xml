@@ -16,11 +16,11 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="gemini" target="1.8" />
-      <module name="gemini-core" target="8" />
-      <module name="gemini-demo" target="8" />
-      <module name="gemini-logback" target="8" />
+      <module name="gemini-core" target="1.8" />
+      <module name="gemini-demo" target="1.8" />
+      <module name="gemini-logback" target="1.8" />
       <module name="gemini-server" target="1.8" />
-      <module name="gemini-trace" target="8" />
+      <module name="gemini-trace" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

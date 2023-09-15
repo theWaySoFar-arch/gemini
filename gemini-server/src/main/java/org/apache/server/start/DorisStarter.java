@@ -1,4 +1,4 @@
-package org.apache.server;
+package org.apache.server.start;
 
 import org.apache.server.store.CommonLogToDB;
 import org.apache.server.store.TraceLogToDB;

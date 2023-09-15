@@ -12,6 +12,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 
 public class KafkaConsumerClient extends AbstractClient{
     private static volatile KafkaConsumerClient instance=null;
@@ -47,6 +48,11 @@ public class KafkaConsumerClient extends AbstractClient{
     public List<String> getMessage(final String topic) throws QueueOutofConnectException {
         List<String> list = new ArrayList<>();
         try {
+            Thread.sleep(new Random().nextInt(3000));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
             while (true) {
                 ConsumerRecords<String, String> records = kafkaConsumer.poll(Duration.ofMillis(batchTimeoutMillis));
 
@@ -67,5 +73,9 @@ public class KafkaConsumerClient extends AbstractClient{
             kafkaConsumer.close();
         }
         return list;
+    }
+
+    public KafkaConsumer getKafkaConsumer() {
+        return this.kafkaConsumer;
     }
 }

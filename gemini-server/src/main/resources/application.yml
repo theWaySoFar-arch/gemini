@@ -19,3 +19,8 @@ apache:
     user: root
     password: ""
     http-port: 8030
+
+gemini:
+  model: kafka
+  kafka:
+    kafkaHosts:
