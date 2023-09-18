@@ -1,8 +1,10 @@
 package org.gemini.core.client;
 
 import lombok.NoArgsConstructor;
+import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 import org.gemini.core.dto.MessageData;
 import org.gemini.core.exception.QueueOutofConnectException;
 import org.gemini.core.pool.KafkaProducerPool;

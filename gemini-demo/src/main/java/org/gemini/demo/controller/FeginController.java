@@ -1,5 +1,6 @@
 package org.gemini.demo.controller;
 
+import org.apache.trace.annotation.Trace;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +19,10 @@ public class FeginController {
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(FeginController.class);
 
     @GetMapping("/test")
+    @Trace
     public String testFeign() {
         logger.info("hhhhh这是一条测试的日志");
+        FeignService.hello();
         return "testFeign";
     }
 }

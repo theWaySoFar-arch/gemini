@@ -18,6 +18,7 @@ import org.gemini.core.dto.MessageData;
 import org.gemini.core.exception.QueueOutofConnectException;
 import org.gemini.core.utils.JsonUtils;
 
+import java.io.PrintStream;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -81,6 +82,7 @@ public class KafkaAppender extends AppenderBase<ILoggingEvent> {
 
     @Override
     public void start() {
+        super.start();
         this.kafkaClient=KafkaProducerClient.getInstance("192.168.190.88:9092","none");
         this.lastSendTime=new AtomicLong(0);
         this.cacheQueue=new ConcurrentLinkedQueue<>();

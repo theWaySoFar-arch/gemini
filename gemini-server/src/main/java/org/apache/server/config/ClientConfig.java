@@ -2,7 +2,6 @@ package org.apache.server.config;
 
 
 
-import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.gemini.core.client.KafkaConsumerClient;
 import org.gemini.core.constant.InitConfigConstant;
 import org.gemini.core.utils.StringUtils;

@@ -2,7 +2,9 @@ package org.gemini.core.factory;
 
 import org.gemini.core.dto.BaseLogMessage;
 import org.gemini.core.dto.TraceLogMessage;
+import org.gemini.core.trace.TraceId;
 import org.gemini.core.trace.TraceMessage;
+import org.gemini.core.utils.IpUtils;
 
 /**
  * @author TheWaySoFar
@@ -42,6 +44,8 @@ public class TraceLogMessageFactory {
         traceLogMessage .setSerialNumber(traceMessage.getSerialNumber().get());
         traceLogMessage.setAppName(appName);
         traceLogMessage.setEnv(env);
+        traceLogMessage.setIPaddr(IpUtils.CURRENT_IP);
+        traceLogMessage.setTraceId(TraceId.logTraceID.get());
         return traceLogMessage;
     }
 }
