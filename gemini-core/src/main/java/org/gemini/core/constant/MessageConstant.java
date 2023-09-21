@@ -25,6 +25,7 @@ public class MessageConstant {
      public final static String TRACE_END = ">";
 
      public final static String DELIM_STR = "{}";
+     public static final String TRACE_ID =  "traceId";
 
      public  static int RUN_MODEL= 2;
      /**

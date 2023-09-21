@@ -8,6 +8,7 @@ import org.gemini.core.constant.MessageConstant;
 import org.gemini.core.dto.BaseLogMessage;
 import org.gemini.core.dto.CommonLogMessage;
 import org.gemini.core.factory.TraceLogMessageFactory;
+import org.gemini.core.trace.TraceId;
 import org.gemini.core.trace.TraceMessage;
 import org.gemini.core.utils.*;
 import org.slf4j.helpers.MessageFormatter;
@@ -25,6 +26,16 @@ public class LogMessageUtils {
 
 
     private static final AtomicLong SEQ = new AtomicLong();
+    private static String isExpandRunLog(ILoggingEvent logEvent) {
+        String traceId = null;
+        if (!logEvent.getMDCPropertyMap().isEmpty()) {
+            traceId = logEvent.getMDCPropertyMap().get(MessageConstant.TRACE_ID);
+            if(traceId!=null) {
+                TraceId.logTraceID.set(traceId);
+            }
+        }
+        return traceId;
+    }
     /**
      *
      * @param iLoggingEvent
@@ -34,6 +45,7 @@ public class LogMessageUtils {
      * @return BaseLogMessage
      */
     public static BaseLogMessage getLogMessage(final ILoggingEvent iLoggingEvent, final String appName, final String env, final String runModel) {
+        isExpandRunLog(iLoggingEvent);
         String formattedMessage=getMessage(iLoggingEvent);
         TraceMessage traceMessage = TTLUtils.threadLocal.get();
         //如果是trace日志
