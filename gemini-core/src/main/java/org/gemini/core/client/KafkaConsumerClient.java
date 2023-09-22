@@ -7,13 +7,14 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.gemini.core.exception.QueueOutofConnectException;
+import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
-
+@Component
 public class KafkaConsumerClient extends AbstractClient{
     private static volatile KafkaConsumerClient instance=null;
 
@@ -23,6 +24,10 @@ public class KafkaConsumerClient extends AbstractClient{
     private long batchTimeoutMillis = 5000; // 设置每批消息的最大等待时间（毫秒）
 
    private static long lastBatchTimestamp = System.currentTimeMillis();
+
+    public KafkaConsumerClient(){
+
+    }
 
     private KafkaConsumerClient(String hosts, String groupName, int maxPullSize) {
         Properties props = new Properties();

@@ -21,10 +21,10 @@ public class ClientConfig {
     private static String model;
     @Value("${gemini.kafka.kafkaHosts}")
     private static String kafkaHosts;
-    @Resource
 
 
-    @Bean
+
+    @Bean(name = "kafkaConsumerClient")
     public KafkaConsumerClient kafkaConsumerClient(){
         if (InitConfigConstant.KAFKA_MODE_NAME.equals(model)) {
             if (StringUtils.isEmpty(kafkaHosts)) {

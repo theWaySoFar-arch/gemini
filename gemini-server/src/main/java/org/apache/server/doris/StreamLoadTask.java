@@ -1,7 +1,15 @@
 package org.apache.server.doris;
 
-import okhttp3.*;
+
 import org.apache.commons.codec.binary.Base64;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultRedirectStrategy;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.gemini.core.constant.MessageConstant;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +17,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
@@ -27,8 +36,7 @@ public class StreamLoadTask {
     private  static String DORIS_PASSWORD ;
     @Value("${apache.doris.http-port}")
     private  static int DORIS_HTTP_PORT ;
-    @Resource
-    private OkHttpClient okHttpClient;
+
     public void send(List<String> list, final String type){
         StringBuilder stringBuilder=new StringBuilder();
         for(String str:list){
@@ -43,29 +51,50 @@ public class StreamLoadTask {
         }
     }
     private void sendData(final String content,final String type) throws Exception {
-        //构建URL
-        String tableName = MessageConstant.COMMON_KEY.equals(type) ? MessageConstant.COMMONLOG_TABLE_NAME : MessageConstant.TRACE_TABLE_NAME;
         final String loadUrl = String.format("http://%s:%s/api/%s/%s/_stream_load",
                 DORIS_HOST,
                 DORIS_HTTP_PORT,
                 DORIS_DB,
-                tableName);
-        Request request = buildRequest(loadUrl);
-        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
-        RequestBody requestBody = RequestBody.create(content, mediaType);
-        try (Response response = okHttpClient.newCall(request).execute()) {
-            if (response.isSuccessful()) {
-                // 处理成功响应
-                String responseBody = response.body().string();
-               logger.info(responseBody);
-            } else {
-                // 处理错误响应
-                logger.error("Error: " + response.code() + " - " + response.message());
+                DORIS_TABLE);
+
+        final HttpClientBuilder httpClientBuilder = HttpClients
+                .custom()
+                .setRedirectStrategy(new DefaultRedirectStrategy() {
+                    @Override
+                    protected boolean isRedirectable(String method) {
+                        return true;
+                    }
+                });
+
+        try (CloseableHttpClient client = httpClientBuilder.build()) {
+            HttpPut put = new HttpPut(loadUrl);
+            StringEntity entity = new StringEntity(content, "UTF-8");
+            put.setHeader(HttpHeaders.EXPECT, "100-continue");
+            put.setHeader(HttpHeaders.AUTHORIZATION, basicAuthHeader(DORIS_USER, DORIS_PASSWORD));
+            // the label header is optional, not necessary
+            // use label header can ensure at most once semantics
+            put.setHeader("label", "39c25a5c-7000-496e-a98e-348a264c81de");
+            put.setEntity(entity);
+
+            try (CloseableHttpResponse response = client.execute(put)) {
+                String loadResult = "";
+                if (response.getEntity() != null) {
+                    loadResult = EntityUtils.toString(response.getEntity());
+                }
+                final int statusCode = response.getStatusLine().getStatusCode();
+                // statusCode 200 just indicates that doris be service is ok, not stream load
+                // you should see the output content to find whether stream load is success
+                if (statusCode != 200) {
+                    throw new IOException(
+                            String.format("Stream load failed, statusCode=%s load result=%s", statusCode, loadResult));
+                }
+
+                System.out.println(loadResult);
             }
         }
     }
     // 创建 PUT request
-    private Request buildRequest(final String loadUrl) {
+/*    private Request buildRequest(final String loadUrl) {
         return   new Request.Builder()
                 .url(loadUrl)
                 .addHeader("Content-Type", "application/json")
@@ -75,7 +104,7 @@ public class StreamLoadTask {
                 .addHeader("format", "json")
                 .addHeader("read_json_by_line", "true")
                 .build();
-    }
+    }*/
 
     private String basicAuthHeader(String username, String password) {
         final String tobeEncode = username + ":" + password;

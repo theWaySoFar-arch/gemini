@@ -32,7 +32,7 @@
 
     <appender name="plumelog" class="org.apache.logback.appender.KafkaAppender">
     <appName>plumelog_demo</appName>
-    <kafkaHosts>192.168.190.88:9092</kafkaHosts>
+    <kafkaHosts>192.168.80.100:9092</kafkaHosts>
     </appender>
     <logger name="org.apache.kafka" level="WARN"/>
 <!--    <appender name="plumelog" class="com.plumelog.logback.appender.RedisAppender">-->

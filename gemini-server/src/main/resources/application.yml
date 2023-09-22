@@ -4,7 +4,7 @@ spring:
   #数据库连接配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.190.90:9030/demo?characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://192.168.80.100:9030/demo?characterEncoding=utf-8&useSSL=false
     username: root
     password:
 
@@ -15,7 +15,7 @@ apache:
   doris:
     host: 192.168.80.100
     db: demo
-    table: stream_test
+    table: CommonLogMessage
     user: root
     password: ""
     http-port: 8030
@@ -23,4 +23,4 @@ apache:
 gemini:
   model: kafka
   kafka:
-    kafkaHosts:
+    kafkaHosts: 192.168.80.100:9092

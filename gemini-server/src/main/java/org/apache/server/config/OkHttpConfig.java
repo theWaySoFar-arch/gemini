@@ -1,12 +1,12 @@
 package org.apache.server.config;
 
-import okhttp3.OkHttpClient;
+//import okhttp3.OkHttpClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.concurrent.TimeUnit;
 
-@Configuration
+/*@Configuration
 public class OkHttpConfig {
 
     @Bean
@@ -21,4 +21,4 @@ public class OkHttpConfig {
                 .build();
     }
 
-}
+}*/

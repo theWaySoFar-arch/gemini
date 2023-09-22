@@ -13,7 +13,7 @@ import javax.sql.DataSource;
  * @describe TODO
  * @date 2023/9/11 21:36
  */
-@Configuration
+/*@Configuration
 public class DataSourceConfig {
     @Value("${spring.datasource.url}")
     private String url;
@@ -34,4 +34,4 @@ public class DataSourceConfig {
         return dataSource;
     }
 
-}
+}*/
