@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
-@Component
+
 public class KafkaConsumerClient extends AbstractClient{
     private static volatile KafkaConsumerClient instance=null;
 

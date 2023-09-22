@@ -24,5 +24,6 @@ public class DorisStarter {
     public void start(){
       commonLogToDB.beginIntoDb();
       traceLogToDB.beginIntoDb();
+      System.out.println("hhhhllllooooooo");
     }
 }

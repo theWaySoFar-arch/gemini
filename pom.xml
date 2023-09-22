@@ -22,6 +22,7 @@
         <module>gemini-demo</module>
         <module>gemini-trace</module>
         <module>gemini-server</module>
+        <module>gemini-server</module>
     </modules>
     
 </project>
