@@ -1,4 +1,4 @@
-package org.apache.server.store;
+package org.gemini.server.store;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

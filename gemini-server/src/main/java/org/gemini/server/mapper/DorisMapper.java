@@ -1,7 +1,7 @@
-package org.apache.server.mapper;
+package org.gemini.server.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.server.po.Person;
+import org.gemini.server.po.Person;
 
 import java.util.List;
 

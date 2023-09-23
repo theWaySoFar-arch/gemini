@@ -1,4 +1,4 @@
-package org.apache.server.config;
+package org.gemini.server.config;
 
 //import okhttp3.OkHttpClient;
 import org.springframework.context.annotation.Bean;

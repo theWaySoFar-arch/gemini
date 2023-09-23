@@ -1,4 +1,4 @@
-package org.apache.server.doris;
+package org.gemini.server.doris;
 
 
 import org.apache.commons.codec.binary.Base64;
@@ -10,17 +10,15 @@ import org.apache.http.impl.client.DefaultRedirectStrategy;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.gemini.core.constant.MessageConstant;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.UUID;
+
 @Component
 public class StreamLoadTask {
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(StreamLoadTask.class);

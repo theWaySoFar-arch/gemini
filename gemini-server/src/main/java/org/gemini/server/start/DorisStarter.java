@@ -1,7 +1,7 @@
-package org.apache.server.start;
+package org.gemini.server.start;
 
-import org.apache.server.store.CommonLogToDB;
-import org.apache.server.store.TraceLogToDB;
+import org.gemini.server.store.CommonLogToDB;
+import org.gemini.server.store.TraceLogToDB;
 import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;

@@ -1,4 +1,4 @@
-package org.apache.server;
+package org.gemini.server;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -14,8 +14,8 @@ import org.springframework.context.annotation.ComponentScan;
  * @date 2023/9/10 12:38
  */
 @SpringBootApplication
-@ComponentScan(basePackages = {"org.gemini","org.apache.server"})
-@MapperScan(basePackages = "org.apache.server.mapper")
+@ComponentScan(basePackages = {"org.gemini"})
+@MapperScan(basePackages = "org.gemini.server.mapper")
 public class AppStart {
     public static void main( String[] args ){
         SpringApplication.run(AppStart.class, args);

@@ -14,11 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
-
+@Component
 public class KafkaConsumerClient extends AbstractClient{
     private static volatile KafkaConsumerClient instance=null;
 
-    private KafkaConsumer kafkaConsumer;
+    public KafkaConsumer kafkaConsumer;
 
     private int batchSize = 100; // 设置每批读取的消息数量
     private long batchTimeoutMillis = 5000; // 设置每批消息的最大等待时间（毫秒）
@@ -36,7 +36,7 @@ public class KafkaConsumerClient extends AbstractClient{
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupName);
-        kafkaConsumer = new KafkaConsumer<>(props);
+        this.kafkaConsumer = new KafkaConsumer<>(props);
     }
 
     public static KafkaConsumerClient getInstance(final String hosts,final String groupName,final int maxPullSize){
@@ -59,7 +59,7 @@ public class KafkaConsumerClient extends AbstractClient{
         }
         try {
             while (true) {
-                ConsumerRecords<String, String> records = kafkaConsumer.poll(Duration.ofMillis(batchTimeoutMillis));
+                ConsumerRecords<String, String> records = this.kafkaConsumer.poll(Duration.ofMillis(batchTimeoutMillis));
 
                 for (ConsumerRecord<String, String> record : records) {
                     // 处理消息
@@ -82,5 +82,9 @@ public class KafkaConsumerClient extends AbstractClient{
 
     public KafkaConsumer getKafkaConsumer() {
         return this.kafkaConsumer;
+    }
+
+    public void setKafkaConsumer(KafkaConsumer kafkaConsumer){
+        this.kafkaConsumer=kafkaConsumer;
     }
 }

@@ -1,8 +1,8 @@
-package org.apache.server.service.impl;
+package org.gemini.server.service.impl;
 
-import org.apache.server.mapper.DorisMapper;
-import org.apache.server.po.Person;
-import org.apache.server.service.DorisService;
+import org.gemini.server.mapper.DorisMapper;
+import org.gemini.server.po.Person;
+import org.gemini.server.service.DorisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

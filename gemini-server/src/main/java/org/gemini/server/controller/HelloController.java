@@ -1,4 +1,4 @@
-package org.apache.server.controller;
+package org.gemini.server.controller;
 
 import org.springframework.stereotype.Controller;
 

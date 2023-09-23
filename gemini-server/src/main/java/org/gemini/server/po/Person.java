@@ -1,4 +1,4 @@
-package org.apache.server.po;
+package org.gemini.server.po;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

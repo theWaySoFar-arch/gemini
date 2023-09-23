@@ -1,4 +1,4 @@
-package org.apache.server.dto;
+package org.gemini.server.dto;
 
 import java.time.LocalDateTime;
 

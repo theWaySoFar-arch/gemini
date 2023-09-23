@@ -1,7 +1,7 @@
-package org.apache.server.controller;
+package org.gemini.server.controller;
 
-import org.apache.server.po.Person;
-import org.apache.server.service.DorisService;
+import org.gemini.server.po.Person;
+import org.gemini.server.service.DorisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

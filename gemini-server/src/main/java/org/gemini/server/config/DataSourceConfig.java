@@ -1,4 +1,4 @@
-package org.apache.server.config;
+package org.gemini.server.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

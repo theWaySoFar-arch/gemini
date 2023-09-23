@@ -1,7 +1,6 @@
-package org.apache.server.service;
+package org.gemini.server.service;
 
-import org.apache.server.po.Person;
-import org.springframework.stereotype.Service;
+import org.gemini.server.po.Person;
 
 import java.util.List;
 
