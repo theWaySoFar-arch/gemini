@@ -13,18 +13,15 @@ import org.springframework.stereotype.Component;
 @Component
 @Order(100)
 public class DorisStart implements InitializingBean {
-    @Autowired(required = false)
-    private KafkaConsumer kafkaConsumer;
-
     @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
+    private KafkaConsumer kafkaConsumer;
 
     @Value("${gemini.model}")
     public String model;
     @Override
     public void afterPropertiesSet() throws Exception {
         if(InitConfigConstant.KAFKA_MODE_NAME.equals(model)){
-            KafkaLogToDB kafkaLogToDB=new KafkaLogToDB(kafkaConsumer,applicationEventPublisher);
+            KafkaLogToDB kafkaLogToDB=new KafkaLogToDB(kafkaConsumer);
             kafkaLogToDB.beginIntoDb();
         }
     }

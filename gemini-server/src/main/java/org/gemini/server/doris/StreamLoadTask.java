@@ -12,6 +12,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
@@ -20,20 +21,21 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Component
+@Order(1)
 public class StreamLoadTask {
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(StreamLoadTask.class);
     @Value("${apache.doris.host}")
-    private   String DORIS_HOST ;
+    private   String DORIS_HOST="192.168.80.100" ;
     @Value("${apache.doris.db}")
-    private   String DORIS_DB ;
+    private   String DORIS_DB ="demo";
     @Value("${apache.doris.table}")
-    private   String DORIS_TABLE ;
+    private   String DORIS_TABLE ="CommonLogMessage";
     @Value("${apache.doris.user}")
-    private   String DORIS_USER ;
+    private   String DORIS_USER="root" ;
     @Value("${apache.doris.password}")
     private   String DORIS_PASSWORD ;
     @Value("${apache.doris.http-port}")
-    private   int DORIS_HTTP_PORT ;
+    private   int  DORIS_HTTP_PORT=8410 ;
 
     public void send(List<String> list){
         StringBuilder stringBuilder=new StringBuilder();
