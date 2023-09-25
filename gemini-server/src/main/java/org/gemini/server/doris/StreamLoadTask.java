@@ -23,17 +23,17 @@ import java.util.List;
 public class StreamLoadTask {
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(StreamLoadTask.class);
     @Value("${apache.doris.host}")
-    private  static String DORIS_HOST ;
+    private   String DORIS_HOST ;
     @Value("${apache.doris.db}")
-    private  static String DORIS_DB ;
+    private   String DORIS_DB ;
     @Value("${apache.doris.table}")
-    private  static String DORIS_TABLE ;
+    private   String DORIS_TABLE ;
     @Value("${apache.doris.user}")
-    private  static String DORIS_USER ;
+    private   String DORIS_USER ;
     @Value("${apache.doris.password}")
-    private  static String DORIS_PASSWORD ;
+    private   String DORIS_PASSWORD ;
     @Value("${apache.doris.http-port}")
-    private  static int DORIS_HTTP_PORT ;
+    private   int DORIS_HTTP_PORT ;
 
     public void send(List<String> list, final String type){
         StringBuilder stringBuilder=new StringBuilder();

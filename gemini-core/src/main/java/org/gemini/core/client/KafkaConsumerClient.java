@@ -10,10 +10,8 @@ import org.gemini.core.exception.QueueOutofConnectException;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.Random;
+import java.util.*;
+
 @Component
 public class KafkaConsumerClient extends AbstractClient{
     private static volatile KafkaConsumerClient instance=null;
@@ -58,6 +56,7 @@ public class KafkaConsumerClient extends AbstractClient{
             e.printStackTrace();
         }
         try {
+            this.kafkaConsumer.subscribe(Collections.singleton(topic));
             while (true) {
                 ConsumerRecords<String, String> records = this.kafkaConsumer.poll(Duration.ofMillis(batchTimeoutMillis));
 

@@ -17,9 +17,9 @@ import org.springframework.stereotype.Component;
 public class ClientConfig {
     Logger logger= LoggerFactory.getLogger(ClientConfig.class);
     @Value("${gemini.model}")
-    private static String model;
+    private  String model;
     @Value("${gemini.kafka.kafkaHosts}")
-    private static String kafkaHosts;
+    private  String kafkaHosts;
 
 
 
