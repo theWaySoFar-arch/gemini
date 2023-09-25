@@ -35,20 +35,20 @@ public class StreamLoadTask {
     @Value("${apache.doris.http-port}")
     private   int DORIS_HTTP_PORT ;
 
-    public void send(List<String> list, final String type){
+    public void send(List<String> list){
         StringBuilder stringBuilder=new StringBuilder();
         for(String str:list){
             stringBuilder.append(str).append("\n");
         }
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         try {
-            sendData(stringBuilder.toString(),type);
+            sendData(stringBuilder.toString());
         } catch (Exception e) {
             logger.error(e.toString());
             throw new RuntimeException(e);
         }
     }
-    private void sendData(final String content,final String type) throws Exception {
+    private void sendData(final String content) throws Exception {
         final String loadUrl = String.format("http://%s:%s/api/%s/%s/_stream_load",
                 DORIS_HOST,
                 DORIS_HTTP_PORT,

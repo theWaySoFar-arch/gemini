@@ -23,17 +23,6 @@ public class ClientConfig {
 
 
 
-    @Bean(name = "kafkaClient")
-    public KafkaConsumerClient kafkaConsumerClient(){
-        if (InitConfigConstant.KAFKA_MODE_NAME.equals(model)) {
-            if (StringUtils.isEmpty(kafkaHosts)) {
-                logger.error("can not find kafkaHosts config! please check the application.properties(plumelog.kafka.kafkaHosts) ");
-                return null;
-            }
-            return KafkaConsumerClient.getInstance(kafkaHosts, InitConfigConstant.KAFKA_CONSUMER_GROUP, InitConfigConstant.MAX_SEND_SIZE);
-        }
-        return null;
-    }
     @Bean
     public KafkaConsumer initKafkaConsumer() {
         if (InitConfigConstant.KAFKA_MODE_NAME.equals(model)) {
