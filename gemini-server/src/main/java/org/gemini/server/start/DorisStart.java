@@ -2,6 +2,7 @@ package org.gemini.server.start;
 
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.gemini.core.constant.InitConfigConstant;
+import org.gemini.server.config.InitConfig;
 import org.gemini.server.store.KafkaLogToDB;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,9 @@ public class DorisStart implements InitializingBean {
     @Autowired
     private KafkaConsumer kafkaConsumer;
 
-    @Value("${gemini.model}")
-    public String model;
     @Override
     public void afterPropertiesSet() throws Exception {
-        if(InitConfigConstant.KAFKA_MODE_NAME.equals(model)){
+        if(InitConfigConstant.KAFKA_MODE_NAME.equals(InitConfig.MODEL)){
             KafkaLogToDB kafkaLogToDB=new KafkaLogToDB(kafkaConsumer);
             kafkaLogToDB.beginIntoDb();
         }

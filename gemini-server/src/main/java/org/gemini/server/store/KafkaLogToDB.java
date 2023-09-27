@@ -18,8 +18,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-@Component
-@DependsOn("streamLoadTask")
+
 public class KafkaLogToDB extends AbstractLogToDB{
     Logger logger=LoggerFactory.getLogger(KafkaLogToDB.class);
     private KafkaConsumer<String, String> kafkaConsumer;
