@@ -35,9 +35,10 @@ public class KafkaLogToDB extends AbstractLogToDB{
 
     @Override
     public void beginIntoDb() {
-
+        threadPoolExecutor.execute(() -> {
             collectRuningLog();
-
+        });
+        logger.info("KafkaLogCollect is starting!");
 
     }
 
