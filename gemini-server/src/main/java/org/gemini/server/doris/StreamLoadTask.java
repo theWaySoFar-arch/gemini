@@ -19,23 +19,24 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 @Order(1)
 public class StreamLoadTask {
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(StreamLoadTask.class);
     @Value("${apache.doris.host}")
-    private   String DORIS_HOST="192.168.80.100" ;
+    private   String DORIS_HOST="192.168.190.90";
     @Value("${apache.doris.db}")
-    private   String DORIS_DB ="demo";
+    private   String DORIS_DB="demo" ;
     @Value("${apache.doris.table}")
-    private   String DORIS_TABLE ="CommonLogMessage";
+    private   String DORIS_TABLE="log_table";
     @Value("${apache.doris.user}")
-    private   String DORIS_USER="root" ;
+    private   String DORIS_USER ="root";
     @Value("${apache.doris.password}")
-    private   String DORIS_PASSWORD ;
+    private   String DORIS_PASSWORD="" ;
     @Value("${apache.doris.http-port}")
-    private   int  DORIS_HTTP_PORT=8410 ;
+    private   int  DORIS_HTTP_PORT=8040 ;
 
     public void send(List<String> list){
         StringBuilder stringBuilder=new StringBuilder();
@@ -73,7 +74,8 @@ public class StreamLoadTask {
             put.setHeader(HttpHeaders.AUTHORIZATION, basicAuthHeader(DORIS_USER, DORIS_PASSWORD));
             // the label header is optional, not necessary
             // use label header can ensure at most once semantics
-            put.setHeader("label", "39c25a5c-7000-496e-a98e-348a264c81de");
+            put.setHeader("label", UUID.randomUUID().toString());
+            put.setHeader("format","json");
             put.setEntity(entity);
 
             try (CloseableHttpResponse response = client.execute(put)) {

@@ -83,7 +83,7 @@ public class KafkaAppender extends AppenderBase<ILoggingEvent> {
     @Override
     public void start() {
         super.start();
-        this.kafkaClient=KafkaProducerClient.getInstance("192.168.80.100:9092","none");
+        this.kafkaClient=KafkaProducerClient.getInstance("192.168.190.88:9092","none");
         this.lastSendTime=new AtomicLong(0);
         this.cacheQueue=new ConcurrentLinkedQueue<>();
     }
