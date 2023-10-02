@@ -30,7 +30,7 @@ public class StreamLoadTask {
     @Value("${apache.doris.db}")
     private   String DORIS_DB="demo" ;
     @Value("${apache.doris.table}")
-    private   String DORIS_TABLE="log_table";
+    private   String DORIS_TABLE="commonlog";
     @Value("${apache.doris.user}")
     private   String DORIS_USER ="root";
     @Value("${apache.doris.password}")
